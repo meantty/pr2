@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Результаты прогноза погоды</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Прогноз погоды по маршруту</h1>
+
+        {% if error %}
+            <div class="error-message">
+                <p>Произошла ошибка: {{ error }}</p>
+                <a href="/">Вернуться к форме</a>
+            </div>
+        {% else %}
+            <h2>Начальная точка</h2>
+            <div class="weather-block">
+                <p><strong>Минимальная температура:</strong> {{ start_weather['min_temperature'] }}°C</p>
+                <p><strong>Максимальная температура:</strong> {{ start_weather['max_temperature'] }}°C</p>
+                <p><strong>Вероятность осадков:</strong> {{ start_weather['precipitation_probability'] }}%</p>
+                <p><strong>Общее состояние погоды:</strong> {{ start_weather['weather_summary'] }}</p>
+                <p><strong>Скорость ветра:</strong> {{ start_weather['wind_speed'] }} км/ч</p>
+            </div>
+
+            <h2>Конечная точка</h2>
+            <div class="weather-block">
+                <p><strong>Минимальная температура:</strong> {{ end_weather['min_temperature'] }}°C</p>
+                <p><strong>Максимальная температура:</strong> {{ end_weather['max_temperature'] }}°C</p>
+                <p><strong>Вероятность осадков:</strong> {{ end_weather['precipitation_probability'] }}%</p>
+                <p><strong>Общее состояние погоды:</strong> {{ end_weather['weather_summary'] }}</p>
+                <p><strong>Скорость ветра:</strong> {{ end_weather['wind_speed'] }} км/ч</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Погодный сервис</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        function toggleFields() {
+            // Получаем значение выбранного типа ввода
+            const startInputType = document.querySelector('input[name="start_input_type"]:checked').value;
+            const endInputType = document.querySelector('input[name="end_input_type"]:checked').value;
+
+            // Показываем или скрываем поля для начальной точки в зависимости от выбора
+            document.getElementById('start-address-fields').style.display = startInputType === 'address' ? 'block' : 'none';
+            document.getElementById('start-coordinates-fields').style.display = startInputType === 'coordinates' ? 'block' : 'none';
+
+            // Показываем или скрываем поля для конечной точки в зависимости от выбора
+            document.getElementById('end-address-fields').style.display = endInputType === 'address' ? 'block' : 'none';
+            document.getElementById('end-coordinates-fields').style.display = endInputType === 'coordinates' ? 'block' : 'none';
+        }
+
+        // Устанавливаем функцию toggleFields при загрузке страницы
+        window.onload = toggleFields;
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Введите маршрут</h1>
+        <form action="/check-weather" method="POST">
+
+            <!-- Выбор типа ввода начальной точки -->
+            <h2>Начальная точка</h2>
+            <label><input type="radio" name="start_input_type" value="address" checked onclick="toggleFields()"> Адрес</label>
+            <label><input type="radio" name="start_input_type" value="coordinates" onclick="toggleFields()"> Координаты</label>
+
+            <!-- Поля для ввода начального адреса -->
+            <div id="start-address-fields">
+                <label for="start_address">Адрес:</label>
+                <input type="text" name="start_address" id="start_address"><br>
+            </div>
+
+            <!-- Поля для ввода начальных координат -->
+            <div id="start-coordinates-fields" style="display: none;">
+                <label for="start_latitude">Широта:</label>
+                <input type="text" name="start_latitude" id="start_latitude"><br>
+                <label for="start_longitude">Долгота:</label>
+                <input type="text" name="start_longitude" id="start_longitude"><br>
+            </div>
+
+            <!-- Выбор типа ввода конечной точки -->
+            <h2>Конечная точка</h2>
+            <label><input type="radio" name="end_input_type" value="address" checked onclick="toggleFields()"> Адрес</label>
+            <label><input type="radio" name="end_input_type" value="coordinates" onclick="toggleFields()"> Координаты</label>
+
+            <!-- Поля для ввода конечного адреса -->
+            <div id="end-address-fields">
+                <label for="end_address">Адрес:</label>
+                <input type="text" name="end_address" id="end_address"><br>
+            </div>
+
+            <!-- Поля для ввода конечных координат -->
+            <div id="end-coordinates-fields" style="display: none;">
+                <label for="end_latitude">Широта:</label>
+                <input type="text" name="end_latitude" id="end_latitude"><br>
+                <label for="end_longitude">Долгота:</label>
+                <input type="text" name="end_longitude" id="end_longitude"><br>
+            </div>
+
+            <input type="submit" value="Проверить погоду">
+        </form>
+    </div>
+</body>
+</html>
